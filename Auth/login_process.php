@@ -16,7 +16,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['password'])) {
             $_SESSION['user_id'] = $row['id'];
-            header("Location: dashboard.php"); // Redirect ke halaman dashboard
+            header("Location: ../dashboard.php"); // Redirect ke halaman dashboard
             exit();
         } else {
             echo "Password salah.";

@@ -1,14 +1,19 @@
 <?php
-$servername = "localhost";
-$username = "username_db";
-$password = "password_db";
-$dbname = "tasktracker";
+$servername = "localhost"; // Replace with your database server name
+$username = "root"; // Replace with your database username
+$password = ""; // Replace with your database password
+$database = "tasktracker"; // Replace with your database name
 
-// Buat koneksi ke database
-$conn = new mysqli($servername, $username, $password, $dbname);
+// Create a connection
+$conn = new mysqli($servername, $username, $password, $database);
 
-// Cek koneksi
+// Check connection
 if ($conn->connect_error) {
-    die("Koneksi ke database gagal: " . $conn->connect_error);
+    die("Connection failed: " . $conn->connect_error);
 }
+
+// You can use the $conn object to perform database operations
+
+// To close the connection when you're done
+// $conn->close();
 ?>
