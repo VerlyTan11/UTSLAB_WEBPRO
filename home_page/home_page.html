@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To-Do List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="text-center mb-4">
+                    <h2>To-Do List</h2>
+                </div>
+               <!-- form untuk menambahkan tugas baru -->
+                <form action="home_page.html" method="POST" class="mb-3">
+                    <div class="input-group">
+                        <div class="col-md-10"> 
+                            <input type="text" class="form-control" placeholder="Tambahkan tugas baru" name="task_name" required>
+                        </div>
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Tambah</button>
+                        </div>
+                    </div>
+                </form>
+
+                 <!-- form untuk melakukan pencarian -->
+                <div class="input-group mb-3">
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="searchTask" placeholder="Cari tugas...">
+                    </div>
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" id="searchButton">Cari</button>
+                    </div>
+                </div>
+
+                <!-- Tombol untuk menampilkan daftar tugas -->
+                <div class="text-center mb-3">
+                    <button class="btn btn-info" id="viewButton">View To-Do List</button>
+                </div>
+
+                <!-- daftar tugas di sini -->
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th class="text-center">Tugas</th>
+                            <th class="text-center">Status</th>
+                            <th>Done</th>
+                            <th class="text-center">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- data palsu, tinggal connect ke database agar list tugas tambah terus -->
+                        <tr>
+                            <td>1</td>
+                            <td class="text-center">Mengerjakan Tugas 1</td>
+                            <td>
+                                <select class="form-select form-select-sm" aria-label="Small select example">
+                                <option selected>Status</option>
+                                <option value="1">Menunggu Dikerjakan</option>
+                                <option value="2">Sedang Dikerjakan</option>
+                                <option value="3">Selesai</option>
+                                </select>
+                            </td>
+                            <td class="justify-content">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" id="checkbox1">
+                                    <label class="form-check-label" for="checkbox1"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="#" class="btn btn-danger btn-sm">Hapus</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td class="text-center">Mengerjakan Tugas 2</td>
+                            <td>
+                                <select class="form-select form-select-sm" aria-label="Small select example">
+                                <option selected>Status</option>
+                                <option value="1">Menunggu Dikerjakan</option>
+                                <option value="2">Sedang Dikerjakan</option>
+                                <option value="3">Selesai</option>
+                                </select>
+                            </td>
+                            <td class="justify-content">
+                                <div class="form-check justify-content">
+                                    <input class="form-check-input" type="checkbox" value="" id="checkbox2">
+                                    <label class="form-check-label" for="checkbox2"></label>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="#" class="btn btn-danger btn-sm">Hapus</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- button logout -->
+        <div class="col-md-2 mt-0">
+            <button class="btn btn-danger float-end">Log Out</button>
+        </div>
+    </div>
+
+    <!-- Script JavaScript untuk fungsi pencarian dan view -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#searchButton").click(function () {
+                var searchTerm = $("#searchTask").val().toLowerCase();
+                $("tbody tr").hide();
+                $("tbody tr").each(function () {
+                    var taskName = $(this).find("td:nth-child(2)").text().toLowerCase();
+                    if (taskName.includes(searchTerm)) {
+                        $(this).show();
+                    }
+                });
+            });
+
+            $("#viewButton").click(function () {
+                // Menggunakan AJAX untuk memuat tampilan View To-Do List dari file terpisah
+                $.ajax({
+                    url: 'view_tdl.html',
+                    success: function (response) {
+                        $("#toDoList").html(response);
+                        $("#toDoList").toggle(); // Toggle tampilan daftar tugas
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
