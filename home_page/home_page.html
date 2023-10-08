@@ -8,16 +8,20 @@
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
+                 <!-- Tombol "Log Out" -->
+                <div class="d-flex justify-content-end mt-3">
+                    <button class="btn btn-danger">Log Out</button>
+                </div>
                 <div class="text-center mb-4">
-                    <h2>To-Do List</h2>
+                    <h2 class="display-4 display-md-6">To-Do List</h2>
                 </div>
                <!-- form untuk menambahkan tugas baru -->
                 <form action="home_page.html" method="POST" class="mb-3">
-                    <div class="input-group">
+                    <div class="input-group mb-3">
                         <div class="col-md-10"> 
                             <input type="text" class="form-control" placeholder="Tambahkan tugas baru" name="task_name" required>
                         </div>
-                        <div class="input-group-append">
+                        <div class="input-group-append p-2">
                             <button class="btn btn-primary" type="submit">Tambah</button>
                         </div>
                     </div>
@@ -28,18 +32,13 @@
                     <div class="col-md-10">
                         <input type="text" class="form-control" id="searchTask" placeholder="Cari tugas...">
                     </div>
-                    <div class="input-group-append">
+                    <div class="input-group-append p-2">
                         <button class="btn btn-secondary" id="searchButton">Cari</button>
                     </div>
                 </div>
 
-                <!-- Tombol untuk menampilkan daftar tugas -->
-                <div class="text-center mb-3">
-                    <button class="btn btn-info" id="viewButton">View To-Do List</button>
-                </div>
-
                 <!-- daftar tugas di sini -->
-                <table class="table">
+                <table class="table table-responsive">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -56,7 +55,7 @@
                             <td class="text-center">Mengerjakan Tugas 1</td>
                             <td>
                                 <select class="form-select form-select-sm" aria-label="Small select example">
-                                <option selected>Status</option>
+                                <option selected placeholder="Status"></option>
                                 <option value="1">Menunggu Dikerjakan</option>
                                 <option value="2">Sedang Dikerjakan</option>
                                 <option value="3">Selesai</option>
@@ -69,8 +68,10 @@
                                 </div>
                             </td>
                             <td>
-                                <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="#" class="btn btn-danger btn-sm">Hapus</a>
+                                <div class="d-grid gap-2 d-md-block" role="group">
+                                    <button type="button" class="btn btn-warning btn-sm">Edit</button>
+                                    <button type="button" class="btn btn-danger btn-sm">Hapus</button>
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -78,59 +79,29 @@
                             <td class="text-center">Mengerjakan Tugas 2</td>
                             <td>
                                 <select class="form-select form-select-sm" aria-label="Small select example">
-                                <option selected>Status</option>
+                                <option selected placeholder="Status"></option>
                                 <option value="1">Menunggu Dikerjakan</option>
                                 <option value="2">Sedang Dikerjakan</option>
                                 <option value="3">Selesai</option>
                                 </select>
                             </td>
-                            <td class="justify-content">
-                                <div class="form-check justify-content">
+                            <td class="align-items">
+                                <div class="form-check align-items">
                                     <input class="form-check-input" type="checkbox" value="" id="checkbox2">
                                     <label class="form-check-label" for="checkbox2"></label>
                                 </div>
                             </td>
                             <td>
-                                <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                                <a href="#" class="btn btn-danger btn-sm">Hapus</a>
+                                <div class="d-grid gap-2 d-md-block" role="group">
+                                    <button type="button" class="btn btn-warning btn-sm">Edit</button>
+                                    <button type="button" class="btn btn-danger btn-sm">Hapus</button>
+                                </div>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
-        <!-- button logout -->
-        <div class="col-md-2 mt-0">
-            <button class="btn btn-danger float-end">Log Out</button>
-        </div>
     </div>
-
-    <!-- Script JavaScript untuk fungsi pencarian dan view -->
-    <script src="assets/js/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            $("#searchButton").click(function () {
-                var searchTerm = $("#searchTask").val().toLowerCase();
-                $("tbody tr").hide();
-                $("tbody tr").each(function () {
-                    var taskName = $(this).find("td:nth-child(2)").text().toLowerCase();
-                    if (taskName.includes(searchTerm)) {
-                        $(this).show();
-                    }
-                });
-            });
-
-            $("#viewButton").click(function () {
-                // Menggunakan AJAX untuk memuat tampilan View To-Do List dari file terpisah
-                $.ajax({
-                    url: 'view_tdl.html',
-                    success: function (response) {
-                        $("#toDoList").html(response);
-                        $("#toDoList").toggle(); // Toggle tampilan daftar tugas
-                    }
-                });
-            });
-        });
-    </script>
 </body>
 </html>
