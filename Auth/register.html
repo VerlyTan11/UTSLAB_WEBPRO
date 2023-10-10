@@ -7,23 +7,40 @@
 </head>
 
 <body>
-    <div class="container">
-        <h2>Register</h2>
-        <form action="register_process.php" method="POST">
-            <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" class="form-control" id="username" name="username" required>
+    <div class="main-container d-flex justify-content-center align-items-center " style="height: 100vh;">
+        <div class="card login-page " style="width: 420px; height: 550px; padding: 40px;">
+            <div class="card-body">
+                <h2 class="card-title text-center" style="font-weight: 700;">REGISTER</h2>
             </div>
-            <div class="form-group">
-                <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+
+            <div class="card-text">
+                <form action="register_process.php" method="POST">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="remember-forgot d-flex justify-content-between" style="font-size: 14.5px;">
+                            <label><input type="checkbox"> I agree to the terms & conditions</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group d-flex gap-2">
+                        <button type="submit" class="btn btn-primary flex-grow-1" style="font-weight: 700;">Register</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Register</button>
-        </form>
     </div>
 </body>
 
