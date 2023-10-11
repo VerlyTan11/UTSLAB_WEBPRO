@@ -1,11 +1,11 @@
 <?php
-$servername = "localhost"; // Replace with your database server name
-$username = "root"; // Replace with your database username
-$password = ""; // Replace with your database password
-$database = "tasktracker"; // Replace with your database name
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "tasktracker";
 
-// Create a connection
-$conn = new mysqli($servername, $username, $password, $database);
+// Buat koneksi ke database
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 // Check connection
 if ($conn->connect_error) {
