@@ -14,7 +14,7 @@
 
 <body>
     <div class="main-container d-flex justify-content-center align-items-center" style="height: 100vh;">
-        <div class="card login-page" style="width: 420px; height: 500px; padding: 40px;">
+        <div class="card login-page col-lg-4" style="width: 100%; height: 500px; padding: 40px;">
             <div class="card-body">
                 <h2 class="card-title text-center" style="font-weight: 700;">LOGIN</h2>
             </div>
@@ -22,13 +22,13 @@
             <div class="card-text">
                 <form action="login_process.php" method="POST">
                     <div class="form-group">
-                        <label for="username" style="font-weight: 400;">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" style="height: 45px;" id="username" name="username" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="password" style="font-weight: 400;">Password</label>
-                        <input type="password" class="form-control" id="password" name="password" required>
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" style="height: 45px;" id="password" name="password" required>
                     </div>
 
                     <div class="form-group">
@@ -39,7 +39,7 @@
                     </div>
 
                     <div class="form-group d-flex gap-2">
-                        <button type="submit" class="btn btn-primary flex-grow-1" style="font-weight: 700;">Login</button>
+                        <button type="submit" class="btn btn-primary flex-grow-1" style="font-weight: 700; height: 45px;">Login</button>
                     </div>
 
                     <div class="form-group">
