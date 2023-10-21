@@ -14,7 +14,7 @@
             </div>
 
             <div class="card-text">
-                <form action="register_process.php" method="POST">
+                <form action="register_process.php" method="POST" id="registrationForm">
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input type="text" class="form-control" id="username" name="username" required>
@@ -32,16 +32,30 @@
 
                     <div class="form-group">
                         <div class="remember-forgot d-flex justify-content-between" style="font-size: 14.5px;">
-                            <label><input type="checkbox"> I agree to the terms & conditions</label>
+                            <label>
+                                <input type="checkbox" id="agreeCheckbox">
+                                <span style="color: blue; text-decoration: underline; cursor: pointer;">I agree to the terms &
+                                    conditions</span>
+                            </label>
                         </div>
                     </div>
 
                     <div class="form-group d-flex gap-2">
-                        <button type="submit" class="btn btn-primary flex-grow-1" style="font-weight: 700;">Register</button>
+                        <button type="submit" class="btn btn-primary flex-grow-1" style="font-weight: 700;"
+                            disabled>Register</button>
                     </div>
                 </form>
             </div>
+        </div>
     </div>
+
+    <script>
+        // Enable the Register button when the checkbox is checked
+        document.getElementById('agreeCheckbox').addEventListener('change', function () {
+            var registerButton = document.querySelector('button[type="submit"]');
+            registerButton.disabled = !this.checked;
+        });
+    </script>
 </body>
 
 </html>
