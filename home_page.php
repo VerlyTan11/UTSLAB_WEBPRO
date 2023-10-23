@@ -152,7 +152,8 @@ $hasil = mysqli_query($koneksi, $sql);
 
 <head>
     <title>To-Do List</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
 
 <body>
@@ -160,9 +161,25 @@ $hasil = mysqli_query($koneksi, $sql);
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <!-- Tombol "Log Out" -->
-                <div class="d-flex justify-content-end mt-3">
-                    <button class="btn btn-danger">Log Out</button>
-                </div>
+                <form method="POST" action="home_page.php">
+                    <div class="d-flex justify-content-end mt-3">
+                        <button class="btn btn-danger" type="submit" name="logout">Log Out</button>
+                        <?php
+                            // Mulai atau lanjutkan sesi
+                            session_start();
+
+                            if (isset($_POST['logout'])) {
+                                // Hapus semua data sesi
+                                session_destroy();
+
+                                // Redirect ke halaman login
+                                header("Location: Auth/login.html");
+                                exit;
+                            }
+                        ?>
+                    </div>
+                </form>
+
                 <div class="text-center mb-4">
                     <h2 class="display-4 display-md-6">To-Do List</h2>
                 </div>
@@ -170,7 +187,8 @@ $hasil = mysqli_query($koneksi, $sql);
                 <form action="home_page.php" method="POST" class="mb-3">
                     <div class="input-group mb-3">
                         <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Tambahkan tugas baru" name="task_name" required>
+                            <input type="text" class="form-control" placeholder="Tambahkan tugas baru" name="task_name"
+                                required>
                         </div>
                         <div class="col-md-4">
                             <input type="date" class="form-control" name="task_date" required>
@@ -228,96 +246,96 @@ $hasil = mysqli_query($koneksi, $sql);
                     <input type="hidden" name="task_start[]" id="taskStartInput">
                 </form>
                 <script>
-                    // Menggunakan JavaScript untuk menangani tautan "Done"
-                    // const doneLinks = document.querySelectorAll('.done-link');
+                // Menggunakan JavaScript untuk menangani tautan "Done"
+                // const doneLinks = document.querySelectorAll('.done-link');
 
-                    // doneLinks.forEach(link => {
-                    //     link.addEventListener('click', (e) => {
-                    //         e.preventDefault();
-                    //         const taskId = link.getAttribute('data-id');
+                // doneLinks.forEach(link => {
+                //     link.addEventListener('click', (e) => {
+                //         e.preventDefault();
+                //         const taskId = link.getAttribute('data-id');
 
-                    //         // Kirim permintaan POST ke home_page.php dengan mengirim ID tugas yang selesai
-                    //         // if done links clicked
-                    //         fetch('home_page.php', {
-                    //                 method: 'POST',
-                    //                 headers: {
-                    //                     'Content-Type': 'application/x-www-form-urlencoded',
-                    //                 },
-                    //                 body: `task_done[]=${taskId}`,
-                    //             })
-                    //             .then(response => {
-                    //                 if (response.status === 200) {
-                    //                     // Refresh halaman setelah tugas selesai diubah
-                    //                     // location.reload();
-                    //                 } else {
-                    //                     console.error('Gagal mengubah status tugas.');
-                    //                 }
-                    //             })
-                    //             .catch(error => {
-                    //                 console.error('Terjadi kesalahan:', error);
-                    //             });
-                    //     });
-                    // });
+                //         // Kirim permintaan POST ke home_page.php dengan mengirim ID tugas yang selesai
+                //         // if done links clicked
+                //         fetch('home_page.php', {
+                //                 method: 'POST',
+                //                 headers: {
+                //                     'Content-Type': 'application/x-www-form-urlencoded',
+                //                 },
+                //                 body: `task_done[]=${taskId}`,
+                //             })
+                //             .then(response => {
+                //                 if (response.status === 200) {
+                //                     // Refresh halaman setelah tugas selesai diubah
+                //                     // location.reload();
+                //                 } else {
+                //                     console.error('Gagal mengubah status tugas.');
+                //                 }
+                //             })
+                //             .catch(error => {
+                //                 console.error('Terjadi kesalahan:', error);
+                //             });
+                //     });
+                // });
 
-                    function statusDone(id) {
-                        fetch('done_task.php', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded',
-                                },
-                                body: `task_done=${id}`,
-                            })
-                            .then(response => {
-                                if (response.status === 200) {
-                                    // Refresh halaman setelah tugas selesai diubah
-                                    location.reload();
-                                } else {
-                                    console.error('Gagal mengubah status tugas.');
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Terjadi kesalahan:', error);
-                            });
-                    }
+                function statusDone(id) {
+                    fetch('done_task.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `task_done=${id}`,
+                        })
+                        .then(response => {
+                            if (response.status === 200) {
+                                // Refresh halaman setelah tugas selesai diubah
+                                location.reload();
+                            } else {
+                                console.error('Gagal mengubah status tugas.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Terjadi kesalahan:', error);
+                        });
+                }
 
-                    // const startLinks = document.querySelectorAll('a[data-id]');
+                // const startLinks = document.querySelectorAll('a[data-id]');
 
-                    // startLinks.forEach(link => {
-                    //     link.addEventListener('click', (e) => {
-                    //         e.preventDefault();
-                    //         const taskId = link.getAttribute('data-id');
+                // startLinks.forEach(link => {
+                //     link.addEventListener('click', (e) => {
+                //         e.preventDefault();
+                //         const taskId = link.getAttribute('data-id');
 
-                    //         fetch('start_task.php?id=' + taskId, {
-                    //                 method: 'GET',
-                    //             })
-                    //             .then(response => {
-                    //                 if (response.status === 200) {
-                    //                     // location.reload(); // Refresh halaman setelah tugas di-start
-                    //                 } else {
-                    //                     console.error('Gagal memulai tugas.');
-                    //                 }
-                    //             })
-                    //             .catch(error => {
-                    //                 console.error('Terjadi kesalahan:', error);
-                    //             });
-                    //     });
-                    // });
+                //         fetch('start_task.php?id=' + taskId, {
+                //                 method: 'GET',
+                //             })
+                //             .then(response => {
+                //                 if (response.status === 200) {
+                //                     // location.reload(); // Refresh halaman setelah tugas di-start
+                //                 } else {
+                //                     console.error('Gagal memulai tugas.');
+                //                 }
+                //             })
+                //             .catch(error => {
+                //                 console.error('Terjadi kesalahan:', error);
+                //             });
+                //     });
+                // });
 
-                    function statusStart(id) {
-                        fetch('start_task.php?id=' + id, {
-                                method: 'GET',
-                            })
-                            .then(response => {
-                                if (response.status === 200) {
-                                    location.reload(); // Refresh halaman setelah tugas di-start
-                                } else {
-                                    console.error('Gagal memulai tugas.');
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Terjadi kesalahan:', error);
-                            });
-                    }
+                function statusStart(id) {
+                    fetch('start_task.php?id=' + id, {
+                            method: 'GET',
+                        })
+                        .then(response => {
+                            if (response.status === 200) {
+                                location.reload(); // Refresh halaman setelah tugas di-start
+                            } else {
+                                console.error('Gagal memulai tugas.');
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Terjadi kesalahan:', error);
+                        });
+                }
                 </script>
             </div>
         </div>
