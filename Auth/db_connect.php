@@ -1,7 +1,7 @@
 <?php
 $servername = "localhost";
-$username = "username_db";
-$password = "password_db";
+$username = "root";
+$password = "";
 $dbname = "tasktracker";
 
 // Buat koneksi ke database

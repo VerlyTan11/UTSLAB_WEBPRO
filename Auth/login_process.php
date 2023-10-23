@@ -16,7 +16,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         $row = $result->fetch_assoc();
         if (password_verify($password, $row['password'])) {
             $_SESSION['user_id'] = $row['id'];
-            header("Location: ../home_page/home_page.html");
+            header("Location: ../home_page.php");
             exit();
         } else {
             echo "Password salah.";
