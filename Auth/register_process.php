@@ -11,7 +11,7 @@ if (isset($_POST['username']) && isset($_POST['email']) && isset($_POST['passwor
     $stmt->bind_param("sss", $username, $email, $password);
 
     if ($stmt->execute()) {
-        echo "Registrasi berhasil. Silakan login <a href='login.php'>di sini</a>.";
+        echo "Registrasi berhasil. Silakan login <a href='login.html'>di sini</a>.";
     } else {
         echo "Registrasi gagal. Silakan coba lagi.";
     }
