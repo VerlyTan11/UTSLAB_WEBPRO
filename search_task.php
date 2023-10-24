@@ -23,11 +23,11 @@ if (isset($_GET['keyword'])) {
                 echo "<td>" . $baris['Tugas'] . "</td>";
                 echo "<td>" . $baris['Tanggal'] . "</td>";
                 echo "<td>" . $baris['Status'] . "</td>";
-                echo "<td class='d-flex justify-content-center grid gap-0 column-gap-3'>";
-                echo "<a href='javascript:void(0)' class='done-link btn btn-primary' data-id='" . $baris['id'] . "' onclick='statusStart(\"{$baris['id']}\")'>Start</a>";
-                echo "<a href='javascript:void(0)' class='done-link btn btn-primary' data-id='" . $baris['id'] . "' onclick='statusDone(\"{$baris['id']}\")'>Done</a>";
-                echo "<a href='edit_task.php?id=" . $baris['id'] . "' class='btn btn-primary'>Edit</a>";
-                echo "<a href='home_page.php?status=2&id=" . $baris['id'] . "' class='btn btn-primary'>Hapus</a>";
+                echo "<td class='d-block d-md-flex flex-md-row justify-content-center grid gap-0 column-gap-3'>";
+                echo "<a href='javascript:void(0)' class='done-link btn btn-primary mr-2 mb-2' data-id='" . $baris['id'] . "' onclick='statusStart(\"{$baris['id']}\")'>Start</a>";
+                echo "<a href='javascript:void(0)' class='done-link btn btn-primary mr-2 mb-2' data-id='" . $baris['id'] . "' onclick='statusDone(\"{$baris['id']}\")'>Done</a>";
+                echo "<a href='edit_task.php?id=" . $baris['id'] . "' class='btn btn-primary mr-2 mb-2'>Edit</a>";
+                echo "<a href='home_page.php?status=2&id=" . $baris['id'] . "' class='btn btn-primary mb-2'>Hapus</a>";
                 echo "</td>";
                 echo "</tr>";
                 $nomor++;

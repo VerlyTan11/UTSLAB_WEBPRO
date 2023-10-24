@@ -181,38 +181,31 @@ $hasil = mysqli_query($koneksi, $sql);
                 </form>
 
                 <div class="text-center mb-4">
-                    <h2 class="display-4 display-md-6">To-Do List</h2>
+                    <h2 class="display-4">To-Do List</h2>
                 </div>
                 <!-- form untuk menambahkan tugas baru -->
                 <form action="home_page.php" method="POST" class="mb-3">
-                    <div class="input-group mb-3 grid gap-0 column-gap-3">
-                        <div class="col-md-6">
-                            <input type="text" class="form-control" placeholder="Tambahkan tugas baru" name="task_name"
-                                required>
-                        </div>
-                        <div class="col-md-4">
-                            <input type="date" class="form-control" name="task_date" required>
-                        </div>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Tambahkan tugas baru" name="task_name" required>
+                        <input type="date" class="form-control" name="task_date" required>
                         <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit">Tambah</button>
+                            <button class="btn btn-primary btn-block" type="submit">Tambah</button>
                         </div>
                     </div>
                 </form>
                 <!-- form untuk melakukan pencarian -->
-                <div class="input-group mb-3 grid gap-0 column-gap-3">
-                    <div class="col-md-10">
-                        <input type="text" class="form-control" id="searchTask" placeholder="Cari tugas...">
-                    </div>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="searchTask" placeholder="Cari tugas...">
                     <div class="input-group-append">
                         <button class="btn btn-secondary" id="searchButton">Cari</button>
                     </div>
                 </div>
 
-                <!-- daftar tugas di sini -->
+                <!-- Daftar tugas di sini -->
                 <form action="home_page.php" method="POST" id="taskForm">
-                    <table class="table table-responsive" id="taskTable">
+                    <table class="table table-responsive">
                         <thead>
-                            <tr class='border border-solid'>
+                            <tr class="border border-solid">
                                 <th class="text-center">No</th>
                                 <th class="text-center">Tugas</th>
                                 <th class="text-center">Tanggal</th>
@@ -229,21 +222,21 @@ $hasil = mysqli_query($koneksi, $sql);
                                 echo "<td>" . $baris['Tugas'] . "</td>";
                                 echo "<td>" . $baris['Tanggal'] . "</td>";
                                 echo "<td>" . $baris['Status'] . "</td>";
-                                echo "<td class='d-flex justify-content-center grid gap-0 column-gap-3'>";
+                                echo "<td class='d-block d-md-flex flex-md-row justify-content-center grid gap-0 column-gap-3'>";
                                 if ($baris['Status'] !== 'Selesai') {
                                     // Hanya tugas yang belum selesai yang bisa di-start dan didone
-                                    echo "<a href='javascript:void(0)' class='done-link btn btn-primary' data-id='" . $baris['id'] . "' onclick='statusStart(\"{$baris['id']}\")'>Start</a>";
-                                    echo "<a href='javascript:void(0)' class='done-link btn btn-primary' data-id='" . $baris['id'] . "' onclick='statusDone(\"{$baris['id']}\")'>Done</a>";
+                                    echo "<a href='javascript:void(0)' class='done-link btn btn-primary mr-2 mb-2' data-id='" . $baris['id'] . "' onclick='statusStart(\"{$baris['id']}\")'>Start</a>";
+                                    echo "<a href='javascript:void(0)' class='done-link btn btn-primary mr-2 mb-2' data-id='" . $baris['id'] . "' onclick='statusDone(\"{$baris['id']}\")'>Done</a>";
                                 }
                                 if ($baris['Status'] !== 'Selesai') {
                                     // Hanya tugas yang belum selesai yang bisa diedit
-                                    echo "<a href='edit_task.php?id=" . $baris['id'] . "' class='btn btn-primary' >Edit</a>";
+                                    echo "<a href='edit_task.php?id=" . $baris['id'] . "' class='btn btn-primary mr-2 mb-2'>Edit</a>";
                                 }
-                                echo "<a href='home_page.php?status=2&id=" . $baris['id'] . "' class='btn btn-primary'>Hapus</a>";
+                                echo "<a href='home_page.php?status=2&id=" . $baris['id'] . "' class='btn btn-primary mb-2'>Hapus</a>";
                                 echo "</td>";
                                 echo "</tr>";
                                 $nomor++;
-                            }                            
+                            }
 
                             mysqli_free_result($hasil);
                             ?>
@@ -251,70 +244,73 @@ $hasil = mysqli_query($koneksi, $sql);
                     </table>
                     <input type="hidden" name="task_start[]" id="taskStartInput">
                 </form>
+
+
                 <script>
                 document.addEventListener('DOMContentLoaded', function () {
-                const searchButton = document.getElementById('searchButton');
-                const searchTaskInput = document.getElementById('searchTask');
-                const taskTable = document.getElementById('taskTable');
+                    const searchButton = document.getElementById('searchButton');
+                    const searchTaskInput = document.getElementById('searchTask');
+                    const taskTable = document.querySelector('.table-responsive');
 
-                searchButton.addEventListener('click', function () {
-                    const keyword = searchTaskInput.value;
+                    searchButton.addEventListener('click', function () {
+                        const keyword = searchTaskInput.value;
 
-                    // Kirim permintaan Ajax untuk mencari tugas berdasarkan kata kunci
-                    fetch(`search_task.php?keyword=${keyword}`, {
-                        method: 'GET'
+                        // Kirim permintaan Ajax untuk mencari tugas berdasarkan kata kunci
+                        fetch(`search_task.php?keyword=${keyword}`, {
+                            method: 'GET'
+                        })
+                        .then(response => response.text())
+                        .then(data => {
+                            // Ganti isi tabel dengan hasil pencarian
+                            taskTable.querySelector('tbody').innerHTML = data;
+                        })
+                        .catch(error => {
+                            console.error('Terjadi kesalahan:', error);
+                        });
+                    });
+                });
+
+                function statusDone(id) {
+                    fetch('done_task.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: `task_done=${id}`,
                     })
-                    .then(response => response.text())
-                    .then(data => {
-                        // Ganti isi tabel dengan hasil pencarian
-                        taskTable.querySelector('tbody').innerHTML = data;
+                    .then(response => {
+                        if (response.status === 200) {
+                            // Refresh halaman setelah tugas selesai diubah
+                            location.reload();
+                        } else {
+                            console.error('Gagal mengubah status tugas.');
+                        }
                     })
                     .catch(error => {
                         console.error('Terjadi kesalahan:', error);
                     });
-                });
-            });
-
-                function statusDone(id) {
-                    fetch('done_task.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/x-www-form-urlencoded',
-                            },
-                            body: `task_done=${id}`,
-                        })
-                        .then(response => {
-                            if (response.status === 200) {
-                                // Refresh halaman setelah tugas selesai diubah
-                                location.reload();
-                            } else {
-                                console.error('Gagal mengubah status tugas.');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Terjadi kesalahan:', error);
-                        });
                 }
 
                 function statusStart(id) {
                     fetch('start_task.php?id=' + id, {
-                            method: 'GET',
-                        })
-                        .then(response => {
-                            if (response.status === 200) {
-                                location.reload(); // Refresh halaman setelah tugas di-start
-                            } else {
-                                console.error('Gagal memulai tugas.');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Terjadi kesalahan:', error);
-                        });
+                        method: 'GET',
+                    })
+                    .then(response => {
+                        if (response.status === 200) {
+                            location.reload(); // Refresh halaman setelah tugas di-start
+                        } else {
+                            console.error('Gagal memulai tugas.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Terjadi kesalahan:', error);
+                    });
                 }
                 </script>
             </div>
         </div>
     </div>
+
 </body>
 
 </html>
