@@ -5,27 +5,29 @@ require_once('koneksi.php');
 if (isset($_GET['keyword'])) {
     $keyword = mysqli_real_escape_string($koneksi, $_GET['keyword']);
 
-    // Query pencarian berdasarkan kata kunci
-    $sql = "SELECT * FROM tbl_task WHERE Tugas LIKE ?";
+    // Query pencarian berdasarkan kata kunci pada nama tugas atau tanggal tugas
+    $sql = "SELECT * FROM tbl_task WHERE Tugas LIKE ? OR Tanggal LIKE ?";
     $stmt = mysqli_prepare($koneksi, $sql);
 
     if ($stmt) {
         $likeKeyword = "%" . $keyword . "%";
-        mysqli_stmt_bind_param($stmt, "s", $likeKeyword);
+        mysqli_stmt_bind_param($stmt, "ss", $likeKeyword, $likeKeyword);
         mysqli_stmt_execute($stmt);
         $result = mysqli_stmt_get_result($stmt);
 
         if (mysqli_num_rows($result) > 0) {
             $nomor = 1;
             while ($baris = mysqli_fetch_assoc($result)) {
-                echo "<tr>";
+                echo "<tr class='border border-solid text-center'>";
                 echo "<td>" . $nomor . "</td>";
                 echo "<td>" . $baris['Tugas'] . "</td>";
-                echo "<td>" . $baris['Status'] . "</td>";
                 echo "<td>" . $baris['Tanggal'] . "</td>";
-                echo "<td>";
-                echo "<a href='edit_task.php?id=" . $baris['id'] . "'>Edit</a> |";
-                echo "<a href='home_page.php?status=2&id=" . $baris['id'] . "'>Hapus</a> |";
+                echo "<td>" . $baris['Status'] . "</td>";
+                echo "<td class='d-block d-md-flex flex-md-row justify-content-center grid gap-0 column-gap-3'>";
+                echo "<a href='javascript:void(0)' class='done-link btn btn-primary mr-2 mb-2' data-id='" . $baris['id'] . "' onclick='statusStart(\"{$baris['id']}\")'>Start</a>";
+                echo "<a href='javascript:void(0)' class='done-link btn btn-primary mr-2 mb-2' data-id='" . $baris['id'] . "' onclick='statusDone(\"{$baris['id']}\")'>Done</a>";
+                echo "<a href='edit_task.php?id=" . $baris['id'] . "' class='btn btn-primary mr-2 mb-2'>Edit</a>";
+                echo "<a href='home_page.php?status=2&id=" . $baris['id'] . "' class='btn btn-primary mb-2'>Hapus</a>";
                 echo "</td>";
                 echo "</tr>";
                 $nomor++;
