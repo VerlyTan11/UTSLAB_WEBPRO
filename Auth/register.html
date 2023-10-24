@@ -26,5 +26,14 @@
         </form>
     </div>
 </body>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
 
+    if (status === 'gagal') {
+        alert('Registrasi gagal. Silakan coba lagi.');
+    } else if (status === 'duplikat') {
+        alert('Username atau email sudah digunakan. Silakan gunakan yang lain.');
+    }
+</script>
 </html>

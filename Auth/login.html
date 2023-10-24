@@ -20,7 +20,15 @@
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
+        <a href="register.html" class="text-decoration-none">Don't have an account? Sign up</a>
     </div>
 </body>
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
 
+    if (status === 'berhasil') {
+        alert('Registrasi berhasil! Silakan login.');
+    }
+</script>
 </html>
